@@ -15,6 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Button } from "@/components/Button";
 import { AuthApiError } from "@/lib/api/authApi";
+import { haptic } from "@/lib/haptics";
 import { colors, radius, spacing } from "@/lib/theme";
 import { useAuth } from "@/features/auth/auth-context";
 
@@ -78,8 +79,10 @@ export function SignInScreen() {
     setError(null);
     try {
       await verifyCode(trimmedEmail, submitted);
+      haptic.success();
       // Success: `user` is now set and the redirect above takes over.
     } catch (err) {
+      haptic.error();
       setCode("");
       setError(
         err instanceof AuthApiError

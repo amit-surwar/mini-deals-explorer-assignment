@@ -1,10 +1,12 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useRef } from "react";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Avatar } from "@/components/Avatar";
 import { ProgressBar } from "@/components/ProgressBar";
 import { DealStatusBadge } from "@/components/StatusBadge";
 import { formatCompactCurrency, formatDate } from "@/lib/format";
+import { haptic } from "@/lib/haptics";
 import { colors, radius, spacing } from "@/lib/theme";
 import type { Deal } from "@/types/deal";
 
@@ -14,6 +16,16 @@ type DealCardProps = {
 };
 
 export function DealCard({ deal, onPress }: DealCardProps) {
+  // Tactile press: the card scales down slightly under the finger.
+  const scale = useRef(new Animated.Value(1)).current;
+  const pressTo = (value: number) =>
+    Animated.spring(scale, {
+      toValue: value,
+      speed: 40,
+      bounciness: 4,
+      useNativeDriver: true,
+    }).start();
+
   const { total_raised_subscribed, total_raised_wired, investor_count } = deal.stats;
   const wiredRatio =
     total_raised_subscribed > 0 ? total_raised_wired / total_raised_subscribed : 0;
@@ -24,11 +36,16 @@ export function DealCard({ deal, onPress }: DealCardProps) {
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={() => {
+        haptic.tap();
+        onPress();
+      }}
+      onPressIn={() => pressTo(0.98)}
+      onPressOut={() => pressTo(1)}
       accessibilityRole="button"
       accessibilityLabel={`Open ${deal.name}`}
-      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
     >
+      <Animated.View style={[styles.card, { transform: [{ scale }] }]}>
       <View style={styles.topRow}>
         <Avatar name={deal.name} uri={deal.logo_url} />
         <View style={styles.titleBlock}>
@@ -64,6 +81,7 @@ export function DealCard({ deal, onPress }: DealCardProps) {
         </Text>
         <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
       </View>
+      </Animated.View>
     </Pressable>
   );
 }
@@ -76,9 +94,6 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     padding: spacing.lg,
     gap: spacing.md,
-  },
-  pressed: {
-    opacity: 0.9,
   },
   topRow: {
     flexDirection: "row",

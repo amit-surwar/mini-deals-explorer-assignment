@@ -3,7 +3,8 @@ import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 
-import { EmptyState, ErrorState, LoadingState } from "@/components/feedback";
+import { EmptyState, ErrorState } from "@/components/feedback";
+import { SkeletonList } from "@/components/SkeletonCard";
 import { DealCard } from "@/features/deals-list/components/DealCard";
 import { SearchBar } from "@/features/deals-list/components/SearchBar";
 import {
@@ -50,8 +51,8 @@ export function DealsListScreen() {
 
   if (isLoading) {
     return (
-      <View style={styles.container}>
-        <LoadingState label="Loading deals…" />
+      <View style={[styles.container, styles.skeletonPad]}>
+        <SkeletonList count={4} />
       </View>
     );
   }
@@ -127,6 +128,9 @@ function ListSeparator() {
 }
 
 const styles = StyleSheet.create({
+  skeletonPad: {
+    padding: spacing.lg,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.background,

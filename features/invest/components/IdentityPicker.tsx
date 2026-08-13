@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { haptic } from "@/lib/haptics";
 import { colors, radius, spacing } from "@/lib/theme";
 import type { Identity } from "@/types/deal";
 
@@ -21,7 +22,10 @@ export function IdentityPicker({
         return (
           <Pressable
             key={identity.id}
-            onPress={() => onSelect(identity.id)}
+            onPress={() => {
+              haptic.select();
+              onSelect(identity.id);
+            }}
             accessibilityRole="radio"
             accessibilityState={{ selected }}
             style={[styles.card, selected && styles.cardSelected]}

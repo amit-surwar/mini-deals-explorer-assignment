@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { formatCompactCurrency } from "@/lib/format";
 import { colors, radius, spacing } from "@/lib/theme";
+import { useCountUp } from "@/lib/useCountUp";
 
 type SummaryHeaderProps = {
   dealCount: number;
@@ -10,15 +11,18 @@ type SummaryHeaderProps = {
 
 /** Portfolio-level totals across ALL deals, independent of search/filter state. */
 export function SummaryHeader({ dealCount, totalRaised }: SummaryHeaderProps) {
+  const animatedCount = useCountUp(dealCount);
+  const animatedRaised = useCountUp(totalRaised);
+
   return (
     <View style={styles.card}>
       <View style={styles.stat}>
-        <Text style={styles.value}>{dealCount}</Text>
+        <Text style={styles.value}>{Math.round(animatedCount)}</Text>
         <Text style={styles.label}>{dealCount === 1 ? "Deal" : "Deals"}</Text>
       </View>
       <View style={styles.divider} />
       <View style={styles.stat}>
-        <Text style={styles.value}>{formatCompactCurrency(totalRaised)}</Text>
+        <Text style={styles.value}>{formatCompactCurrency(animatedRaised)}</Text>
         <Text style={styles.label}>Total raised</Text>
       </View>
     </View>

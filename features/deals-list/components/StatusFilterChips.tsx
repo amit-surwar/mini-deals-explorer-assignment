@@ -1,5 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { haptic } from "@/lib/haptics";
 import { colors, radius, spacing } from "@/lib/theme";
 import type { DealStatus } from "@/types/deal";
 
@@ -25,7 +26,10 @@ export function StatusFilterChips({ value, onChange }: StatusFilterChipsProps) {
         return (
           <Pressable
             key={option.value}
-            onPress={() => onChange(option.value)}
+            onPress={() => {
+              if (!selected) haptic.select();
+              onChange(option.value);
+            }}
             accessibilityRole="button"
             accessibilityState={{ selected }}
             style={({ pressed }) => [

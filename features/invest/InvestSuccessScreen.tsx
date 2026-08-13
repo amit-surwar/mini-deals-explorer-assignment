@@ -1,12 +1,17 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useRouter } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { Animated, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Button } from "@/components/Button";
 import { InvestmentStatusBadge } from "@/components/StatusBadge";
 import { formatCurrency } from "@/lib/format";
+import { haptic } from "@/lib/haptics";
 import { colors, radius, spacing } from "@/lib/theme";
+
+const IS_TEST =
+  typeof process !== "undefined" && process.env.JEST_WORKER_ID !== undefined;
 
 type InvestSuccessScreenProps = {
   dealName: string;
@@ -16,6 +21,19 @@ type InvestSuccessScreenProps = {
 export function InvestSuccessScreen({ dealName, amount }: InvestSuccessScreenProps) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+
+  // The payoff moment: checkmark springs in with a success haptic.
+  const pop = useRef(new Animated.Value(IS_TEST ? 1 : 0)).current;
+  useEffect(() => {
+    if (IS_TEST) return;
+    haptic.success();
+    Animated.spring(pop, {
+      toValue: 1,
+      speed: 14,
+      bounciness: 12,
+      useNativeDriver: true,
+    }).start();
+  }, [pop]);
 
   const handleBackToDeal = () => {
     if (router.canGoBack()) {
@@ -30,7 +48,9 @@ export function InvestSuccessScreen({ dealName, amount }: InvestSuccessScreenPro
       <Stack.Screen options={{ title: "Success" }} />
 
       <ScrollView contentContainerStyle={styles.content}>
-        <Ionicons name="checkmark-circle" size={96} color={colors.primary} />
+        <Animated.View style={{ opacity: pop, transform: [{ scale: pop }] }}>
+          <Ionicons name="checkmark-circle" size={96} color={colors.primary} />
+        </Animated.View>
         <Text style={styles.title}>Investment submitted</Text>
         <Text style={styles.subtitle}>
           {amount !== null
