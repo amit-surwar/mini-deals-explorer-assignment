@@ -1,6 +1,7 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
-import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 
 import { EmptyState, ErrorState, LoadingState } from "@/components/feedback";
 import { DealCard } from "@/features/deals-list/components/DealCard";
@@ -11,7 +12,7 @@ import {
 } from "@/features/deals-list/components/StatusFilterChips";
 import { SummaryHeader } from "@/features/deals-list/components/SummaryHeader";
 import { useDeals } from "@/features/deals-list/useDeals";
-import { colors, spacing } from "@/lib/theme";
+import { colors, radius, spacing } from "@/lib/theme";
 import type { Deal } from "@/types/deal";
 
 export function DealsListScreen() {
@@ -21,7 +22,8 @@ export function DealsListScreen() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
 
-  const deals = useMemo<Deal[]>(() => data ?? [], [data]);
+  const deals = useMemo<Deal[]>(() => data?.deals ?? [], [data]);
+  const isFromCache = data?.source === "cache";
 
   const filteredDeals = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -70,12 +72,21 @@ export function DealsListScreen() {
       {/* Controls live outside the FlatList header so the search input never
           remounts (and drops the keyboard) while results re-render. */}
       <View style={styles.controls}>
+        {isFromCache ? (
+          <View style={styles.offlineBanner}>
+            <Ionicons name="cloud-offline-outline" size={16} color={colors.warning} />
+            <Text style={styles.offlineText}>
+              Offline — showing your last synced deals.
+            </Text>
+          </View>
+        ) : null}
         <SummaryHeader dealCount={deals.length} totalRaised={totalRaised} />
         <SearchBar value={search} onChange={setSearch} />
         <StatusFilterChips value={statusFilter} onChange={setStatusFilter} />
       </View>
 
       <FlatList
+        testID="deals-list"
         data={filteredDeals}
         keyExtractor={(deal) => deal.id}
         renderItem={({ item }) => (
@@ -123,6 +134,21 @@ const styles = StyleSheet.create({
   controls: {
     padding: spacing.lg,
     gap: spacing.md,
+  },
+  offlineBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.sm,
+    backgroundColor: colors.warningSoft,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm + 2,
+  },
+  offlineText: {
+    flex: 1,
+    fontSize: 13,
+    color: colors.warning,
+    fontWeight: "600",
   },
   listContent: {
     paddingHorizontal: spacing.lg,

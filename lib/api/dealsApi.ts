@@ -1,8 +1,10 @@
 import { API_BASE_URL } from "@/lib/api/config";
+import { loadCachedDeals, saveCachedDeals } from "@/lib/offlineCache";
 import type {
   CreateInvestmentInput,
   Deal,
   DealDetail,
+  DealsSnapshot,
   Investment,
   MyInvestment,
 } from "@/types/deal";
@@ -36,8 +38,22 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return body as T;
 }
 
-export async function fetchDeals(): Promise<Deal[]> {
-  return request<Deal[]>("/deals");
+/**
+ * Loads the deals list, falling back to the last successfully fetched list
+ * (persisted in AsyncStorage) when the network is unavailable.
+ */
+export async function fetchDeals(): Promise<DealsSnapshot> {
+  try {
+    const deals = await request<Deal[]>("/deals");
+    await saveCachedDeals(deals);
+    return { deals, source: "network" };
+  } catch (error) {
+    const cached = await loadCachedDeals();
+    if (cached) {
+      return { deals: cached, source: "cache" };
+    }
+    throw error;
+  }
 }
 
 export async function fetchDealById(dealId: string): Promise<DealDetail> {
