@@ -127,6 +127,7 @@ export function SignInScreen() {
             <>
               <Text style={styles.label}>Email address</Text>
               <TextInput
+                key="email-input"
                 style={styles.input}
                 value={email}
                 onChangeText={setEmail}
@@ -157,6 +158,7 @@ export function SignInScreen() {
                 Code sent to {trimmedEmail}. It expires in 10 minutes.
               </Text>
               <TextInput
+                key="otp-input"
                 testID="otp-input"
                 style={[styles.input, styles.codeInput]}
                 value={code}
@@ -275,6 +277,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.text,
     backgroundColor: colors.card,
+    // Explicit resets: Fabric recycles native TextInputs, and a field reused
+    // from the OTP step would otherwise keep its wide letter-spacing.
+    letterSpacing: 0,
+    textAlign: "left",
   },
   codeInput: {
     textAlign: "center",
