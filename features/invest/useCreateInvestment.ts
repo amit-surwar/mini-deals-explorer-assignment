@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createInvestment } from "@/lib/api/dealsApi";
-import { dealKeys } from "@/lib/api/queryKeys";
+import { dealKeys, myInvestmentKeys } from "@/lib/api/queryKeys";
 
 export function useCreateInvestment() {
   const queryClient = useQueryClient();
@@ -9,9 +9,10 @@ export function useCreateInvestment() {
   return useMutation({
     mutationFn: createInvestment,
     onSuccess: () => {
-      // Refresh both the list (summary totals) and the detail (investor list,
-      // raise stats) so the new subscription is visible everywhere.
+      // Refresh the list (summary totals), the detail (investor list, raise
+      // stats), and the session's My Investments tab.
       void queryClient.invalidateQueries({ queryKey: dealKeys.all });
+      void queryClient.invalidateQueries({ queryKey: myInvestmentKeys.all });
     },
   });
 }

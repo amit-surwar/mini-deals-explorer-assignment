@@ -1,16 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
-import {
-  FlatList,
-  Pressable,
-  RefreshControl,
-  StyleSheet,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 
 import { EmptyState, ErrorState, LoadingState } from "@/components/feedback";
-import { useAuth } from "@/features/auth/auth-context";
 import { DealCard } from "@/features/deals-list/components/DealCard";
 import { SearchBar } from "@/features/deals-list/components/SearchBar";
 import {
@@ -24,7 +16,6 @@ import type { Deal } from "@/types/deal";
 
 export function DealsListScreen() {
   const router = useRouter();
-  const { signOut } = useAuth();
   const { data, isLoading, isError, error, refetch, isRefetching } = useDeals();
 
   const [search, setSearch] = useState("");
@@ -55,16 +46,9 @@ export function DealsListScreen() {
     setStatusFilter("all");
   };
 
-  const signOutButton = (
-    <Pressable onPress={signOut} hitSlop={8} accessibilityLabel="Sign out">
-      <Ionicons name="log-out-outline" size={22} color={colors.text} />
-    </Pressable>
-  );
-
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <Stack.Screen options={{ headerRight: () => signOutButton }} />
         <LoadingState label="Loading deals…" />
       </View>
     );
@@ -73,7 +57,6 @@ export function DealsListScreen() {
   if (isError) {
     return (
       <View style={styles.container}>
-        <Stack.Screen options={{ headerRight: () => signOutButton }} />
         <ErrorState
           message={error?.message ?? "We couldn't load the deals."}
           onRetry={() => void refetch()}
@@ -84,8 +67,6 @@ export function DealsListScreen() {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ headerRight: () => signOutButton }} />
-
       {/* Controls live outside the FlatList header so the search input never
           remounts (and drops the keyboard) while results re-render. */}
       <View style={styles.controls}>
