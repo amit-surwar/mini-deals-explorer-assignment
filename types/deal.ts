@@ -54,3 +54,22 @@ export type DealDetail = {
   deal: Deal;
   investments: Investment[];
 };
+
+/** Payload the client sends to create an investment. */
+export type CreateInvestmentInput = {
+  deal_id: string;
+  identity: Identity;
+  subscription_amount: number;
+};
+
+/** A session investment joined with its deal's name for display. */
+export type MyInvestment = Investment & { deal_name: string };
+
+/**
+ * Deals list plus where it came from — "cache" means the network failed and
+ * the offline fallback served the last successfully loaded list.
+ */
+export type DealsSnapshot = {
+  deals: Deal[];
+  source: "network" | "cache";
+};
