@@ -1,0 +1,382 @@
+{
+  "deals": [
+    {
+      "id": "deal_northwind_iv",
+      "name": "Northwind Ventures SPV IV",
+      "entity_name": "Northwind GP LLC",
+      "type": "spv",
+      "status": "active",
+      "management_fee_percent": 2.0,
+      "total_carry": 20,
+      "minimum_investment": 25000,
+      "closing_date": "2026-09-30T23:59:59Z",
+      "created_at": "2026-05-12T09:30:00Z",
+      "stats": {
+        "total_raised_subscribed": 215000,
+        "total_raised_wired": 150000,
+        "investor_count": 4
+      }
+    },
+    {
+      "id": "deal_meridian_ii",
+      "name": "Meridian Growth Fund II",
+      "entity_name": "Meridian Fund Advisors LLC",
+      "type": "fund",
+      "status": "active",
+      "management_fee_percent": 2.5,
+      "total_carry": 20,
+      "minimum_investment": 100000,
+      "closing_date": "2026-08-28T23:59:59Z",
+      "created_at": "2026-03-02T15:00:00Z",
+      "stats": {
+        "total_raised_subscribed": 4600000,
+        "total_raised_wired": 3750000,
+        "investor_count": 5
+      }
+    },
+    {
+      "id": "deal_bluebottle",
+      "name": "Bluebottle Robotics SPV",
+      "entity_name": "Bluebottle Robotics GP LLC",
+      "type": "spv",
+      "status": "active",
+      "management_fee_percent": 2.0,
+      "total_carry": 20,
+      "minimum_investment": 10000,
+      "closing_date": "2026-10-15T23:59:59Z",
+      "created_at": "2026-07-15T11:15:00Z",
+      "stats": {
+        "total_raised_subscribed": 115000,
+        "total_raised_wired": 10000,
+        "investor_count": 4
+      }
+    },
+    {
+      "id": "deal_saltgrass_iii",
+      "name": "Saltgrass Seed SPV III",
+      "entity_name": "Saltgrass Ventures GP LLC",
+      "type": "spv",
+      "status": "active",
+      "management_fee_percent": 2.0,
+      "total_carry": 20,
+      "minimum_investment": 5000,
+      "closing_date": "2026-09-15T23:59:59Z",
+      "created_at": "2026-06-20T08:45:00Z",
+      "stats": {
+        "total_raised_subscribed": 52500,
+        "total_raised_wired": 40000,
+        "investor_count": 5
+      }
+    },
+    {
+      "id": "deal_juniper_i",
+      "name": "Juniper Climate Fund I",
+      "entity_name": "Juniper Climate Advisors LLC",
+      "type": "fund",
+      "status": "closed",
+      "management_fee_percent": 2.0,
+      "total_carry": 20,
+      "minimum_investment": 50000,
+      "closing_date": "2026-01-31T23:59:59Z",
+      "created_at": "2025-06-01T10:00:00Z",
+      "stats": {
+        "total_raised_subscribed": 1000000,
+        "total_raised_wired": 1000000,
+        "investor_count": 4
+      }
+    },
+    {
+      "id": "deal_copperline_ii",
+      "name": "Copperline Real Assets SPV II",
+      "entity_name": "Copperline Capital GP LLC",
+      "type": "spv",
+      "status": "closed",
+      "management_fee_percent": 1.5,
+      "total_carry": 15,
+      "minimum_investment": 25000,
+      "closing_date": "2026-04-30T23:59:59Z",
+      "created_at": "2025-09-10T14:20:00Z",
+      "stats": {
+        "total_raised_subscribed": 475000,
+        "total_raised_wired": 425000,
+        "investor_count": 5
+      }
+    },
+    {
+      "id": "deal_aurora",
+      "name": "Aurora Deep Tech SPV",
+      "entity_name": "Aurora Deep Tech GP LLC",
+      "type": "spv",
+      "status": "draft",
+      "management_fee_percent": 2.0,
+      "total_carry": 25,
+      "minimum_investment": 15000,
+      "closing_date": "2026-12-15T23:59:59Z",
+      "created_at": "2026-07-28T16:40:00Z",
+      "stats": {
+        "total_raised_subscribed": 0,
+        "total_raised_wired": 0,
+        "investor_count": 0
+      }
+    },
+    {
+      "id": "deal_halcyon",
+      "name": "Halcyon Credit Opportunities Fund",
+      "entity_name": "Halcyon Credit Management LLC",
+      "type": "fund",
+      "status": "draft",
+      "management_fee_percent": 1.75,
+      "total_carry": 15,
+      "minimum_investment": 250000,
+      "closing_date": "2027-01-31T23:59:59Z",
+      "created_at": "2026-07-01T09:00:00Z",
+      "stats": {
+        "total_raised_subscribed": 1050000,
+        "total_raised_wired": 0,
+        "investor_count": 3
+      }
+    }
+  ],
+  "investments": [
+    {
+      "id": "inv_nw4_01",
+      "deal_id": "deal_northwind_iv",
+      "identity": { "legal_name": "Priya Raman", "type": "individual", "country": "US" },
+      "subscription_amount": 50000,
+      "net_investment": 49000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_nw4_02",
+      "deal_id": "deal_northwind_iv",
+      "identity": { "legal_name": "Kestrel Family Trust", "type": "entity", "country": "US" },
+      "subscription_amount": 100000,
+      "net_investment": 98000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_nw4_03",
+      "deal_id": "deal_northwind_iv",
+      "identity": { "legal_name": "Alton Whitfield", "type": "individual", "country": "GB" },
+      "subscription_amount": 25000,
+      "net_investment": 24500,
+      "status": "signed"
+    },
+    {
+      "id": "inv_nw4_04",
+      "deal_id": "deal_northwind_iv",
+      "identity": { "legal_name": "Mina Okafor", "type": "individual", "country": "NG" },
+      "subscription_amount": 40000,
+      "net_investment": 39200,
+      "status": "pending"
+    },
+    {
+      "id": "inv_mer2_01",
+      "deal_id": "deal_meridian_ii",
+      "identity": { "legal_name": "Cloverfield Pension Partners", "type": "entity", "country": "US" },
+      "subscription_amount": 2000000,
+      "net_investment": 1950000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_mer2_02",
+      "deal_id": "deal_meridian_ii",
+      "identity": { "legal_name": "Bright Harbor Capital LLC", "type": "entity", "country": "US" },
+      "subscription_amount": 1000000,
+      "net_investment": 975000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_mer2_03",
+      "deal_id": "deal_meridian_ii",
+      "identity": { "legal_name": "Tetsuo Yamada", "type": "individual", "country": "JP" },
+      "subscription_amount": 750000,
+      "net_investment": 731250,
+      "status": "wired"
+    },
+    {
+      "id": "inv_mer2_04",
+      "deal_id": "deal_meridian_ii",
+      "identity": { "legal_name": "Sofia Lindqvist", "type": "individual", "country": "SE" },
+      "subscription_amount": 500000,
+      "net_investment": 487500,
+      "status": "signed"
+    },
+    {
+      "id": "inv_mer2_05",
+      "deal_id": "deal_meridian_ii",
+      "identity": { "legal_name": "Oakhaven Holdings Ltd", "type": "entity", "country": "GB" },
+      "subscription_amount": 350000,
+      "net_investment": 341250,
+      "status": "signed"
+    },
+    {
+      "id": "inv_blu_01",
+      "deal_id": "deal_bluebottle",
+      "identity": { "legal_name": "Gabriel Mensah", "type": "individual", "country": "GH" },
+      "subscription_amount": 50000,
+      "net_investment": 49000,
+      "status": "signed"
+    },
+    {
+      "id": "inv_blu_02",
+      "deal_id": "deal_bluebottle",
+      "identity": { "legal_name": "Sable Point Ventures LLC", "type": "entity", "country": "US" },
+      "subscription_amount": 30000,
+      "net_investment": 29400,
+      "status": "signed"
+    },
+    {
+      "id": "inv_blu_03",
+      "deal_id": "deal_bluebottle",
+      "identity": { "legal_name": "Anneke Visser", "type": "individual", "country": "NL" },
+      "subscription_amount": 25000,
+      "net_investment": 24500,
+      "status": "pending"
+    },
+    {
+      "id": "inv_blu_04",
+      "deal_id": "deal_bluebottle",
+      "identity": { "legal_name": "Hana Suzuki", "type": "individual", "country": "JP" },
+      "subscription_amount": 10000,
+      "net_investment": 9800,
+      "status": "wired"
+    },
+    {
+      "id": "inv_slt3_01",
+      "deal_id": "deal_saltgrass_iii",
+      "identity": { "legal_name": "Noor Haddad", "type": "individual", "country": "JO" },
+      "subscription_amount": 25000,
+      "net_investment": 24500,
+      "status": "wired"
+    },
+    {
+      "id": "inv_slt3_02",
+      "deal_id": "deal_saltgrass_iii",
+      "identity": { "legal_name": "Tomás Aguilar", "type": "individual", "country": "MX" },
+      "subscription_amount": 10000,
+      "net_investment": 9800,
+      "status": "wired"
+    },
+    {
+      "id": "inv_slt3_03",
+      "deal_id": "deal_saltgrass_iii",
+      "identity": { "legal_name": "June & Wren Trust", "type": "entity", "country": "US" },
+      "subscription_amount": 7500,
+      "net_investment": 7350,
+      "status": "signed"
+    },
+    {
+      "id": "inv_slt3_04",
+      "deal_id": "deal_saltgrass_iii",
+      "identity": { "legal_name": "Leila Nasser", "type": "individual", "country": "EG" },
+      "subscription_amount": 5000,
+      "net_investment": 4900,
+      "status": "wired"
+    },
+    {
+      "id": "inv_slt3_05",
+      "deal_id": "deal_saltgrass_iii",
+      "identity": { "legal_name": "Owen Prichard", "type": "individual", "country": "US" },
+      "subscription_amount": 5000,
+      "net_investment": 4900,
+      "status": "pending"
+    },
+    {
+      "id": "inv_jun1_01",
+      "deal_id": "deal_juniper_i",
+      "identity": { "legal_name": "Redwood Angels Syndicate LLC", "type": "entity", "country": "US" },
+      "subscription_amount": 500000,
+      "net_investment": 490000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_jun1_02",
+      "deal_id": "deal_juniper_i",
+      "identity": { "legal_name": "Marcus Thorne", "type": "individual", "country": "CA" },
+      "subscription_amount": 250000,
+      "net_investment": 245000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_jun1_03",
+      "deal_id": "deal_juniper_i",
+      "identity": { "legal_name": "Elm & Vine Trust", "type": "entity", "country": "US" },
+      "subscription_amount": 150000,
+      "net_investment": 147000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_jun1_04",
+      "deal_id": "deal_juniper_i",
+      "identity": { "legal_name": "Lucia Ferreira", "type": "individual", "country": "PT" },
+      "subscription_amount": 100000,
+      "net_investment": 98000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_cop2_01",
+      "deal_id": "deal_copperline_ii",
+      "identity": { "legal_name": "Ingrid Bergström", "type": "individual", "country": "SE" },
+      "subscription_amount": 200000,
+      "net_investment": 197000,
+      "status": "wired"
+    },
+    {
+      "id": "inv_cop2_02",
+      "deal_id": "deal_copperline_ii",
+      "identity": { "legal_name": "Dario Bencivenga", "type": "individual", "country": "IT" },
+      "subscription_amount": 125000,
+      "net_investment": 123125,
+      "status": "wired"
+    },
+    {
+      "id": "inv_cop2_03",
+      "deal_id": "deal_copperline_ii",
+      "identity": { "legal_name": "Whitmore Family Office LLC", "type": "entity", "country": "US" },
+      "subscription_amount": 75000,
+      "net_investment": 73875,
+      "status": "wired"
+    },
+    {
+      "id": "inv_cop2_04",
+      "deal_id": "deal_copperline_ii",
+      "identity": { "legal_name": "Priya Raman", "type": "individual", "country": "US" },
+      "subscription_amount": 50000,
+      "net_investment": 49250,
+      "status": "signed"
+    },
+    {
+      "id": "inv_cop2_05",
+      "deal_id": "deal_copperline_ii",
+      "identity": { "legal_name": "Felix Braun", "type": "individual", "country": "DE" },
+      "subscription_amount": 25000,
+      "net_investment": 24625,
+      "status": "wired"
+    },
+    {
+      "id": "inv_hal_01",
+      "deal_id": "deal_halcyon",
+      "identity": { "legal_name": "Stonebridge Endowment Partners", "type": "entity", "country": "US" },
+      "subscription_amount": 500000,
+      "net_investment": 491250,
+      "status": "pending"
+    },
+    {
+      "id": "inv_hal_02",
+      "deal_id": "deal_halcyon",
+      "identity": { "legal_name": "Aisha Al-Farsi", "type": "individual", "country": "AE" },
+      "subscription_amount": 300000,
+      "net_investment": 294750,
+      "status": "pending"
+    },
+    {
+      "id": "inv_hal_03",
+      "deal_id": "deal_halcyon",
+      "identity": { "legal_name": "Quentin Marsh", "type": "individual", "country": "GB" },
+      "subscription_amount": 250000,
+      "net_investment": 245625,
+      "status": "pending"
+    }
+  ]
+}
