@@ -11,6 +11,7 @@
       "supportsTablet": false
     },
     "android": {
+      "package": "com.amitsurwar.minidealsexplorer",
       "edgeToEdgeEnabled": true
     },
     "plugins": [
