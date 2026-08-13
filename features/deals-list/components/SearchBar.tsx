@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
     fontSize: 15,
     color: colors.text,
-    // Fabric recycles native TextInputs; reset so a reused OTP field's
-    // wide letter-spacing can't leak into this input.
+    // Fabric recycles native TextInputs; explicit reset so a recycled
+    // field can't carry stale letter-spacing into this input.
     letterSpacing: 0,
   },
 });
