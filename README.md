@@ -1,8 +1,8 @@
 # Mini Deals Explorer
 
-A small investor-facing Expo (React Native) app that mirrors a **Deals → Deal Detail → Invest** flow. Deals data is served by an in-app mock API; **authentication is real** — email OTP → JWT against a deployed NestJS backend.
+A small investor-facing Expo (React Native) app that mirrors a **Deals → Deal Detail → Invest** flow, built entirely on local mock data — no real backend.
 
-- **Sign in** — real email-OTP authentication against a live NestJS API (https://kingsley-health-api.onrender.com): request a 6-digit code (bcrypt-hashed server-side, 10-min expiry, rate-limited) → verify → 24h JWT. In demo mode the code is shown on the sign-in screen, so any email works without inbox access. The session (token + user) persists in AsyncStorage across app restarts and is re-validated via `/auth/me` on launch; sign-out clears it.
+- **Sign in** — any email works; a mock user is stored in a React context.
 - **Deals list** — search-as-you-type, Draft/Active/Closed filter chips, a summary header (deal count + total raised), and pull-to-refresh that reshuffles the mock data after a fake delay.
 - **Deal detail** — Overview / Investors / Documents tabs.
 - **Invest** — pick an identity → currency-formatted amount (validated against the deal's minimum) → accept terms → submit with a loading state → success screen. The new subscription then appears in the deal's investor list, raise stats, and My Investments.
@@ -48,7 +48,7 @@ app/                    # expo-router routes — thin wrappers around feature sc
       invest.tsx        # "/deals/:id/invest" → invest flow
       success.tsx       # "/deals/:id/success"
 features/
-  auth/                 # real OTP auth: context (session persist/restore) + two-step sign-in screen
+  auth/                 # mock auth context + sign-in screen
   deals-list/           # list screen, useDeals(), list components
   deal-detail/          # detail screen, useDealById(), tab components
   invest/               # invest + success screens, useCreateInvestment()
