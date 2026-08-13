@@ -1,0 +1,154 @@
+import { Ionicons } from "@expo/vector-icons";
+import { Stack, useRouter } from "expo-router";
+import { useMemo, useState } from "react";
+import {
+  FlatList,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from "react-native";
+
+import { EmptyState, ErrorState, LoadingState } from "@/components/feedback";
+import { useAuth } from "@/features/auth/auth-context";
+import { DealCard } from "@/features/deals-list/components/DealCard";
+import { SearchBar } from "@/features/deals-list/components/SearchBar";
+import {
+  StatusFilterChips,
+  type StatusFilterValue,
+} from "@/features/deals-list/components/StatusFilterChips";
+import { SummaryHeader } from "@/features/deals-list/components/SummaryHeader";
+import { useDeals } from "@/features/deals-list/useDeals";
+import { colors, spacing } from "@/lib/theme";
+import type { Deal } from "@/types/deal";
+
+export function DealsListScreen() {
+  const router = useRouter();
+  const { signOut } = useAuth();
+  const { data, isLoading, isError, error, refetch, isRefetching } = useDeals();
+
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState<StatusFilterValue>("all");
+
+  const deals = useMemo<Deal[]>(() => data ?? [], [data]);
+
+  const filteredDeals = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    return deals.filter((deal) => {
+      const matchesStatus = statusFilter === "all" || deal.status === statusFilter;
+      const matchesQuery =
+        query.length === 0 || deal.name.toLowerCase().includes(query);
+      return matchesStatus && matchesQuery;
+    });
+  }, [deals, search, statusFilter]);
+
+  const totalRaised = useMemo(
+    () =>
+      deals.reduce((sum, deal) => sum + deal.stats.total_raised_subscribed, 0),
+    [deals],
+  );
+
+  const hasActiveFilters = search.trim().length > 0 || statusFilter !== "all";
+
+  const clearFilters = () => {
+    setSearch("");
+    setStatusFilter("all");
+  };
+
+  const signOutButton = (
+    <Pressable onPress={signOut} hitSlop={8} accessibilityLabel="Sign out">
+      <Ionicons name="log-out-outline" size={22} color={colors.text} />
+    </Pressable>
+  );
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Stack.Screen options={{ headerRight: () => signOutButton }} />
+        <LoadingState label="Loading deals…" />
+      </View>
+    );
+  }
+
+  if (isError) {
+    return (
+      <View style={styles.container}>
+        <Stack.Screen options={{ headerRight: () => signOutButton }} />
+        <ErrorState
+          message={error?.message ?? "We couldn't load the deals."}
+          onRetry={() => void refetch()}
+        />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Stack.Screen options={{ headerRight: () => signOutButton }} />
+
+      {/* Controls live outside the FlatList header so the search input never
+          remounts (and drops the keyboard) while results re-render. */}
+      <View style={styles.controls}>
+        <SummaryHeader dealCount={deals.length} totalRaised={totalRaised} />
+        <SearchBar value={search} onChange={setSearch} />
+        <StatusFilterChips value={statusFilter} onChange={setStatusFilter} />
+      </View>
+
+      <FlatList
+        data={filteredDeals}
+        keyExtractor={(deal) => deal.id}
+        renderItem={({ item }) => (
+          <DealCard deal={item} onPress={() => router.push(`/deals/${item.id}`)} />
+        )}
+        contentContainerStyle={styles.listContent}
+        ItemSeparatorComponent={ListSeparator}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={() => void refetch()}
+            tintColor={colors.primary}
+            colors={[colors.primary]}
+          />
+        }
+        ListEmptyComponent={
+          <EmptyState
+            icon="search-outline"
+            title="No deals match"
+            message={
+              hasActiveFilters
+                ? "Try a different search or status filter."
+                : "There are no deals to show right now."
+            }
+            actionLabel={hasActiveFilters ? "Clear filters" : undefined}
+            onAction={hasActiveFilters ? clearFilters : undefined}
+          />
+        }
+      />
+    </View>
+  );
+}
+
+function ListSeparator() {
+  return <View style={styles.separator} />;
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  controls: {
+    padding: spacing.lg,
+    gap: spacing.md,
+  },
+  listContent: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.xxl,
+    flexGrow: 1,
+  },
+  separator: {
+    height: spacing.md,
+  },
+});
