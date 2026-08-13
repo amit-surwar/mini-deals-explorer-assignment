@@ -52,7 +52,11 @@ async function signIn(email: string) {
   // The (app) guard must bounce an unauthenticated "/" to the sign-in screen.
   const emailInput = await screen.findByPlaceholderText("you@example.com", {}, LONG);
   fireEvent.changeText(emailInput, email);
-  fireEvent.press(screen.getByText("Sign in"));
+  fireEvent.press(screen.getByText("Send code"));
+  // Real OTP flow (mocked in Jest via authTestHandlers): entering the full
+  // 6-digit code auto-verifies and the guard lets the session through.
+  const codeInput = await screen.findByTestId("otp-input", {}, LONG);
+  fireEvent.changeText(codeInput, "123456");
 }
 
 describe("audit: happy path", () => {
